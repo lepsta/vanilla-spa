@@ -15,6 +15,11 @@ class App {
   }
 
   handleRoutes() {
+    this._hash = this.getCleanPath();
+    if (this._hash === "") {
+      this._hash = "/";
+    }
+
     let self = this;
     window.addEventListener("popstate", function(ev) {
       ev.preventDefault();
@@ -23,14 +28,23 @@ class App {
     });
   }
 
-  render() {
+  async loadView(path) {
+    return await window.fetch("/views/"+path).then(function(r) {
+      return r.text();
+    });
+  }
+
+  async render() {
+    console.log(this._hash)
     const route = this._routes[this._hash];
     const data = route.render();
-    console.log(data)
+    const html = await this.loadView(data.view);
+    document.getElementById("app").innerHTML = html;
   }
 
   run() {
     this.handleRoutes();
+    this.render();
   }
 }
 
