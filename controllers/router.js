@@ -1,3 +1,6 @@
-const NAME = "router";
+import list from "./List.js";
 
-export default NAME;
+
+export const routes = {
+  "/": list
+}
