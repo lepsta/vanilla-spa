@@ -4,8 +4,11 @@ class List {
   render() {
     return {
       view: "list.html",
-      tasks: tasks
-    }
+      model: tasks,
+      data: {
+        "items": tasks.list()
+      }
+    };
   }
 }
 

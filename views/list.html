@@ -1,6 +1,65 @@
-<h1>To-Do List</h1>
-<ul id="list">
-  {{#tasks}}
-  <li>{{title}}</li>
-  {{/tasks}}
-</ul>
+<div>
+  <div class="min-h-full">
+    <nav class="bg-indigo-600">
+      <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <img class="h-8 w-8" src="https://tailwindui.com/img/logos/workflow-mark-indigo-300.svg" alt="Workflow">
+            </div>
+            <div class="hidden md:block">
+              <div class="ml-10 flex items-baseline space-x-4">
+                <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" -->
+                <a href="#" class="bg-indigo-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                  aria-current="page">Tasks</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <header class="bg-white shadow-sm">
+      <div class="max-w-2xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+        <h1 class="text-lg leading-6 font-semibold text-gray-900 flex items-center">
+          <div class="flex-1">Task List</div>
+          <a class="border p-2 px-3 text-sm font-normal rounded-md bg-indigo-600 text-white" href="/#/new">+ Add
+            item</a>
+        </h1>
+      </div>
+    </header>
+    <main>
+      <div class="max-w-2xl mx-auto py-6 sm:px-6 lg:px-8">
+        <ul role="list" class="divide-y divide-gray-200">
+          {{#items}}
+          <li
+            class="relative bg-white py-5 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+            <div class="flex items-center space-x-2">
+              {{#done}}
+              <input type="checkbox" ref="{{id}}" checked="true" onchange="(() => {
+                window.app.model.toggleDone(this.getAttribute('ref'));
+              })()" />
+              {{/done}}
+              {{^done}}
+              <input type="checkbox" ref="{{id}}" onchange="(() => {
+                window.app.model.toggleDone(this.getAttribute('ref'));
+              })()" />
+              {{/done}}
+              <div class="flex-1">{{title}} </div>
+              <button ref="{{id}}" onclick="(() => {
+                window.app.model.delete(this.getAttribute('ref'));
+                window.app.render();
+              })()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-rose-400" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            </div>
+          </li>
+          {{/items}}
+        </ul>
+      </div>
+    </main>
+  </div>
+</div>

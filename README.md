@@ -22,3 +22,7 @@ To run the application, you can use the `serve` command like this:
 serve -l 8080
 ```
 After running this, you will be able to view the application at [http://localhost:8080](http://localhost:8080).
+
+### Templating library
+
+The project also uses a templating library called Mustache. See the details here: [https://github.com/janl/mustache.js](https://github.com/janl/mustache.js)

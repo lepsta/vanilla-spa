@@ -1,1 +1,41 @@
-<h1>New Item</h1>
+<div>
+  <div class="min-h-full">
+    <nav class="bg-indigo-600">
+      <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <img class="h-8 w-8" src="https://tailwindui.com/img/logos/workflow-mark-indigo-300.svg" alt="Workflow">
+            </div>
+            <div class="hidden md:block">
+              <div class="ml-10 flex items-baseline space-x-4">
+                <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" -->
+                <a href="/" class="bg-indigo-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                  aria-current="page">Tasks</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <header class="bg-white shadow-sm">
+      <div class="max-w-2xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+        <h1 class="text-lg leading-6 font-semibold text-gray-900 flex items-center">
+          <div class="flex-1">New Task</div>
+        </h1>
+      </div>
+    </header>
+    <main>
+      <div class="max-w-2xl mx-auto py-6 sm:px-6 lg:px-8 flex items-center space-x-2 w-full">
+        <input class="shadow text-sm flex-1 border px-3 py-2 rounded" placeholder="Enter task description" type="text"
+          id="title" autocomplete="off" />
+        <button class="border shadow p-2 px-3 text-sm font-normal rounded-md bg-indigo-600 text-white" onclick="(() => {
+            const input = document.getElementById('title');
+            const value = input.value;
+            window.app.model.create(value);
+            window.location.hash = '/';
+          })()">Add Item</button>
+      </div>
+    </main>
+  </div>
+</div>

@@ -1,12 +1,22 @@
-import { routes } from "./controllers/router.js";
+import { routes } from "./controllers/routes.js";
 
 class App {
-
-  _routes = {}
+  name = "";
+  version = "";
+  description = "";
+  routes = {};
+  model = null;
   _hash = "";
 
   constructor(routes) {
-    this._routes = routes;
+    this.routes = routes;
+  }
+
+  async init() {
+    const config = await fetch("config.json").then(val => val.json())
+    this.name = config.appname;
+    this.version = config.version;
+    this.description = config.description;
   }
 
   getCleanPath() {
@@ -19,36 +29,28 @@ class App {
     if (this._hash === "") {
       this._hash = "/";
     }
-
-    let self = this;
-    window.addEventListener("popstate", function(ev) {
+    window.addEventListener('popstate', (ev) => {
       ev.preventDefault();
-      self._hash = self.getCleanPath();
-      self.render();
+      this._hash = this.getCleanPath();
+      this.render();
     });
   }
 
   async loadView(path) {
-    return await window.fetch("/views/"+path).then(function(r) {
-      return r.text();
-    });
-  }
-
-  displayData(html, data) {
-    const container = document.getElementById("app");
-    container.innerHTML = Mustache.render(html, data);
+    return await fetch("/views/"+path).then(r => r.text());
   }
 
   async render() {
-    console.log(this._hash)
-    const route = this._routes[this._hash];
+    const route = this.routes[this._hash] || this.routes["/404"];
     const data = route.render();
-    const html = await this.loadView(data.view);
-    this.displayData(html, data);
-    
+    this.model = data?.model;
+    const container = document.getElementById("app");
+    const html = await this.loadView(data.view, data?.data);
+    container.innerHTML = Mustache.render(html, data?.data);
   }
 
-  run() {
+  async run() {
+    await this.init();
     this.handleRoutes();
     this.render();
   }

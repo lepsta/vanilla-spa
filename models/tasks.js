@@ -1,24 +1,51 @@
-const tasks = [
-  {
-    id: 1,
-    title: "Do the dishes",
-    done: false
-  },
-  {
-    id: 2,
-    title: "Do the dishes",
-    done: false
-  },
-  {
-    id: 3,
-    title: "Take out the trash",
-    done: false
-  },
-  {
-    id: 4,
-    title: "Clean the house",
-    done: false
-  }
-];
+class Tasks {
+  key = "app_tasks";
+  items = [];
 
-export default tasks;
+  constructor() {
+    const data = window.localStorage.getItem(this.key);
+    if (data !== null) {
+      this.items = JSON.parse(data);
+    }
+  }
+
+  _getIndexByID(id) {
+    return this.items.findIndex((item) => {
+      return item.id === id;
+    })
+  }
+
+  create(title) {
+    const id = Math.random()+"";
+    this.items.push({
+      id,
+      title,
+      done: false
+    });
+    window.localStorage.setItem(this.key, JSON.stringify(this.items))
+  }
+
+  list() {
+    return this.items;
+  }
+
+  toggleDone(id) {
+    const index = this._getIndexByID(id);
+    let item = this.items[index];
+    if ("done" in item) {
+      item.done = !item.done;
+    } else {
+      item.done = true;
+    }
+    this.items[index] = item;
+    window.localStorage.setItem(this.key, JSON.stringify(this.items))
+  }
+
+  delete(id) {
+    this.items.splice(this._getIndexByID(id), 1);
+    window.localStorage.setItem(this.key, JSON.stringify(this.items))
+  }
+
+}
+
+export default new Tasks();
