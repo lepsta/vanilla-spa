@@ -14,7 +14,7 @@ npm install --global serve
 > **Note:** You will need to install Node Package Manager [from here](https://nodejs.org/en/download/)
 
 
-### Run
+### Run the application
 
 To run the application, you can use the `serve` command like this:
 
