@@ -34,12 +34,18 @@ class App {
     });
   }
 
+  displayData(html, data) {
+    const container = document.getElementById("app");
+    container.innerHTML = Mustache.render(html, data);
+  }
+
   async render() {
     console.log(this._hash)
     const route = this._routes[this._hash];
     const data = route.render();
     const html = await this.loadView(data.view);
-    document.getElementById("app").innerHTML = html;
+    this.displayData(html, data);
+    
   }
 
   run() {

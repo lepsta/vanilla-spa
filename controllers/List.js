@@ -1,9 +1,10 @@
-
+import tasks from "../models/tasks.js";
 
 class List {
   render() {
     return {
-      view: "list.html"
+      view: "list.html",
+      tasks: tasks
     }
   }
 }
